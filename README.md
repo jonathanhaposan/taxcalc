@@ -27,4 +27,4 @@ $ docker-compose up
 
 ### Documentation
 
-##### [Link to documentation](https://github.com/jonathanhaposan/taxcalc/docs)
+##### [Link to documentation](https://github.com/jonathanhaposan/taxcalc/tree/master/docs)

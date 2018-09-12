@@ -127,6 +127,6 @@ Example responses
 
 ##### Database
 
-See schema [image](https://github.com/jonathanhaposan/taxcalc/docs/schemadb.png)
+See schema [image](https://github.com/jonathanhaposan/taxcalc/blob/master/docs/schemadb.png)
 
 this application use 2 table : `tax_code` and `bill`, the relationship between these two table are `one to many`
