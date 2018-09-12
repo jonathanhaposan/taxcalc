@@ -112,3 +112,66 @@ func newCreateBillForm() *url.Values {
 	form.Set("amount", "1000")
 	return &form
 }
+
+func Test_validateData(t *testing.T) {
+	var args1, args2, args3, args4, args5, args6 url.Values
+
+	args1 = make(url.Values)
+	args2 = make(url.Values)
+	args3 = make(url.Values)
+	args4 = make(url.Values)
+	args5 = make(url.Values)
+	args6 = make(url.Values)
+
+	args1.Add("product_name", "")
+	args2.Add("product_name", "kitkat")
+	args2.Add("tax_code", "")
+	args3.Add("product_name", "kitkat")
+	args3.Add("tax_code", "1123")
+	args4.Add("product_name", "kitkat")
+	args4.Add("tax_code", "1")
+	args4.Add("amount", "")
+	args5.Add("product_name", "kitkat")
+	args5.Add("tax_code", "1")
+	args5.Add("amount", "0")
+	args6.Add("product_name", "kitkat")
+	args6.Add("tax_code", "1")
+	args6.Add("amount", "1000")
+
+	type args struct {
+		data url.Values
+	}
+	tests := []struct {
+		name            string
+		args            args
+		wantProductName string
+		wantTaxCode     int64
+		wantPrice       int64
+		wantErr         bool
+	}{
+		{"1", args{args1}, "", 0, 0, true},
+		{"2", args{args2}, "kitkat", 0, 0, true},
+		{"3", args{args3}, "kitkat", 1123, 0, true},
+		{"4", args{args4}, "kitkat", 1, 0, true},
+		{"5", args{args5}, "kitkat", 1, 0, true},
+		{"6", args{args6}, "kitkat", 1, 1000, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotProductName, gotTaxCode, gotPrice, err := validateData(tt.args.data)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("validateData() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if gotProductName != tt.wantProductName {
+				t.Errorf("validateData() gotProductName = %v, want %v", gotProductName, tt.wantProductName)
+			}
+			if gotTaxCode != tt.wantTaxCode {
+				t.Errorf("validateData() gotTaxCode = %v, want %v", gotTaxCode, tt.wantTaxCode)
+			}
+			if gotPrice != tt.wantPrice {
+				t.Errorf("validateData() gotPrice = %v, want %v", gotPrice, tt.wantPrice)
+			}
+		})
+	}
+}
