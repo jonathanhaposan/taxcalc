@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <title>Form</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <form action="/sanitycheck/submit" method="POST">
+          <div class="form-group">
+            <label for="product_name">Product Name</label>
+            <input type="text" class="form-control" name="product_name" placeholder="Enter Product">
+          </div>
+          <div class="form-group">
+            <label for="tax_code">Tax Code</label>
+            <input type="number" class="form-control" name="tax_code" placeholder="Enter Tax Code">
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" class="form-control" name="amount" placeholder="Enter Amount">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+    {{ if eq .HasError true}}
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Has Error</strong> {{ .Message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    {{ else }}
+
+    {{ end }}
+
+  </div>
+
+</body>
+
+<script src="/assets//js/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+</html>

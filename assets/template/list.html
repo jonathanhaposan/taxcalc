@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+
+  <title>List</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Tax Code</th>
+              <th scope="col">Tax Type</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Tax Amount</th>
+              <th scope="col">Total Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{ $length := len .Bills }} {{ if eq $length 0 }}
+            <tr>
+              <td colspan="6">Not found</td>
+            </tr>
+            {{ else }}
+              {{ range $bill := .Bills }}
+              <tr>
+                <td scope="row">{{ $bill.ProductName}}</th>
+                <td>{{ $bill.Tax.ID}}</td>
+                <td>{{ $bill.Tax.Type}}</td>
+                <td>{{ $bill.OriginalPrice}}</td>
+                <td>{{ $bill.TaxAmount}}</td>
+                <td>{{ $bill.TotalAmount}}</td>
+              </tr>
+              {{ end }}
+            {{ end }}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script src="/assets//js/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+</html>
