@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  postgres:
+    restart: always
+    image: "postgres:9.5"
+    container_name: postgres
+    volumes:
+      - "./database/:/docker-entrypoint-initdb.d/"
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: docker
+
+  taxcalc:
+    restart: always
+    image: "golang:1.11"
+    container_name: taxcalc
+    ports:
+      - 9001:9001
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    environment:
+      DBHOST: postgres
+      DBUSER: docker
+      DBPASS: docker
+      DBNAME: docker
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ./taxcalc
+
