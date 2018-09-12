@@ -30,7 +30,7 @@ func HandleGetAllBill(w http.ResponseWriter, r *http.Request) {
 		log.Println("[HandleGetAllBill] get data error: ", err)
 		msg := jsonMsg{
 			http.StatusInternalServerError,
-			err,
+			err.Error(),
 		}
 		resp, _ := json.Marshal(msg)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -50,7 +50,7 @@ func HandleGetAllBill(w http.ResponseWriter, r *http.Request) {
 		log.Println("[HandleGetAllBill] json marshal error: ", err)
 		msg = jsonMsg{
 			http.StatusInternalServerError,
-			err,
+			err.Error(),
 		}
 
 		resp, _ = json.Marshal(msg)
@@ -76,7 +76,7 @@ func HandleSubmitBill(w http.ResponseWriter, r *http.Request) {
 		log.Println("[HandleSubmitBill] parse form error: ", err)
 		msg = jsonMsg{
 			http.StatusInternalServerError,
-			err,
+			err.Error(),
 		}
 
 		resp, _ = json.Marshal(msg)
@@ -91,7 +91,7 @@ func HandleSubmitBill(w http.ResponseWriter, r *http.Request) {
 		log.Println("[HandleSubmitBill] validation error: ", err)
 		msg = jsonMsg{
 			http.StatusInternalServerError,
-			err,
+			err.Error(),
 		}
 
 		resp, _ = json.Marshal(msg)
@@ -115,7 +115,7 @@ func HandleSubmitBill(w http.ResponseWriter, r *http.Request) {
 		log.Println("[HandleSubmitBill] add new bill error: ", err)
 		msg = jsonMsg{
 			http.StatusInternalServerError,
-			err,
+			err.Error(),
 		}
 
 		resp, _ = json.Marshal(msg)
@@ -135,7 +135,7 @@ func HandleSubmitBill(w http.ResponseWriter, r *http.Request) {
 		log.Println("[HandleSubmitBill] marshal error: ", err)
 		msg = jsonMsg{
 			http.StatusInternalServerError,
-			err,
+			err.Error(),
 		}
 
 		resp, _ = json.Marshal(msg)
@@ -175,8 +175,8 @@ func validateData(data url.Values) (productName string, taxCode, price int64, er
 		return
 	}
 
-	if price == 0 {
-		err = errors.New("price should not empty")
+	if price <= 0 {
+		err = errors.New("price should not minus or zero")
 		log.Println("[validateData] price error:", err)
 		return
 	}
