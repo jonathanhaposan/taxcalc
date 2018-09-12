@@ -104,8 +104,8 @@ func testBillGetAllBillErrorScan(t *testing.T) {
 	defer db.Close()
 	Init(db)
 
-	rows := sqlmock.NewRows([]string{"product_name", "tax_code_id", "description", "original_price", "tax_amount", "total_amount"}).
-		AddRow("Disc", "trouble maker", "Food", 12312, 123.12, 1231231)
+	rows := sqlmock.NewRows([]string{"bill_id", "product_name", "tax_code_id", "description", "original_price", "tax_amount", "total_amount"}).
+		AddRow("1", "Disc", "trouble maker", "Food", 12312, 123.12, 1231231)
 
 	mock.ExpectQuery("SELECT (.+) FROM (.+)").WillReturnRows(rows)
 
@@ -128,8 +128,8 @@ func testBillGetAllBillPositive(t *testing.T) {
 	defer db.Close()
 	Init(db)
 
-	rows := sqlmock.NewRows([]string{"product_name", "tax_code_id", "description", "original_price", "tax_amount", "total_amount"}).
-		AddRow("Disc", 1, "Food", 12312, 123.12, 1231231)
+	rows := sqlmock.NewRows([]string{"bill_id", "product_name", "tax_code_id", "description", "original_price", "tax_amount", "total_amount"}).
+		AddRow(1, "Disc", 1, "Food", 12312, 123.12, 1231231)
 
 	mock.ExpectQuery("SELECT (.+) FROM (.+)").WillReturnRows(rows)
 

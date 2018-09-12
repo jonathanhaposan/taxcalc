@@ -38,6 +38,7 @@ func GetAllBill() ([]Bill, string, string, string, error) {
 
 	query := `
 	SELECT
+		b.bill_id,
 		b.product_name,
 		b.tax_code_id,
 		tc.description,
@@ -56,9 +57,9 @@ func GetAllBill() ([]Bill, string, string, string, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&temp.ProductName, &temp.Tax.ID, &temp.Tax.Type, &temp.OriginalPrice, &temp.TaxAmount, &temp.TotalAmount)
+		err = rows.Scan(&temp.ID, &temp.ProductName, &temp.Tax.ID, &temp.Tax.Type, &temp.OriginalPrice, &temp.TaxAmount, &temp.TotalAmount)
 		if err != nil {
-			log.Println("[AddNewBill] scan query error:")
+			log.Println("[AddNewBill] scan query error:", err)
 			return nil, "", "", "", err
 		}
 

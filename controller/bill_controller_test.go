@@ -28,11 +28,12 @@ func TestHandleGetAllBill(t *testing.T) {
 	defer db.Close()
 	model.Init(db)
 
-	rows := sqlmock.NewRows([]string{"product_name", "tax_code_id", "description", "original_price", "tax_amount", "total_amount"}).
-		AddRow("test", 1, "Food", 1000, 100, 1100)
+	rows := sqlmock.NewRows([]string{"bill_id", "product_name", "tax_code_id", "description", "original_price", "tax_amount", "total_amount"}).
+		AddRow(1, "test", 1, "Food", 1000, 100, 1100)
 
 	bill := []model.Bill{
 		{
+			ID:            1,
 			ProductName:   "test",
 			Tax:           model.Tax{ID: 1, Type: "Food"},
 			OriginalPrice: 1000,
