@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-  postgres:
+  postgrestaxcalc:
     restart: always
     image: "postgres:9.5"
-    container_name: postgres
+    container_name: postgrestaxcalc
     volumes:
       - "./database/:/docker-entrypoint-initdb.d/"
     ports:
@@ -21,11 +21,11 @@ services:
     ports:
       - 9001:9001
     links:
-      - postgres
+      - postgrestaxcalc
     depends_on:
-      - postgres
+      - postgrestaxcalc
     environment:
-      DBHOST: postgres
+      DBHOST: postgrestaxcalc
       DBUSER: docker
       DBPASS: docker
       DBNAME: docker
