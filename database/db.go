@@ -16,7 +16,6 @@ func Init() *sql.DB {
 	dbName := os.Getenv("DBNAME")
 
 	connStr := fmt.Sprintf("user=%s password=%s dbname=%s host=%s sslmode=disable", user, pass, dbName, host)
-	connStr = "user=postgres dbname=gotest sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
